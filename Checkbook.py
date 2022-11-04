@@ -69,7 +69,7 @@ while True:                                                #while loop to keep p
             day = input('Please input the date you wish to view (YYYY-MM-DD):\n')
             print(f'Your transaction history for {day}')                    #third category is viewing transactions
             for n in transactions:                                         #by date
-                if n[-19:-9] == day:
+                if day in n:
                     print(n)
         elif category == '4':
             keyword = input('Please enter keyword:')            #fourth category is viewing transaction by keyword
