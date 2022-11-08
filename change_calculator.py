@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[72]:
+# In[28]:
 
 
 def dollar_calc(dollars):        #function for dollar calculation
@@ -44,14 +44,14 @@ def coin_calc(coins):          #function for coin calculation
         elif coins >= 1:      #if statement to determine number of pennies
             coins -= 1
             pennies += 1
-    return [quarters, dimes, nickels, pennies]      #return list of each number of coins
+    return[quarters, dimes, nickels, pennies]      #return list of each number of coins
 
 
 total_price = float(input('Please input the total price: $'))         #taking input from user for total price
 cash_given = float(input('Please input the total cash paid: $'))      #taking input from user for cash paid
 
 def change_calc(price, cash):
-    total_change = str(round((cash - price), 2))    #determining total change
+    total_change = str(format((cash - price), '.2f'))              #determining total change
     split_list = total_change.split('.')
     dollars = split_list[0]                #setting dollars to equal only the whole numbers of the change
     coins = split_list[-1]                 #setting coins to equal the decimal numbers of the change
@@ -59,6 +59,7 @@ def change_calc(price, cash):
     
     dollar_list = dollar_calc(dollars)    #calling the dollar_calc function
     coin_list = coin_calc(coins)          #calling coin_calc function
+    total_change = float(total_change)
     
     print(f'Your total change is ${total_change}')           #print total change
     
@@ -92,15 +93,26 @@ def change_calc(price, cash):
         print(coin_list[2], "nickels" )     #for nickels
     elif coin_list[2] == 1:
         print(coin_list[2], "nickel")
-    if coin_list[3] > 1:
-        print('and', coin_list[3], "pennies!" )   #for pennies!
-    elif coin_list[3] == 1:
-        print('and 1 penny!')
-
+    if total_change < 0.05:
+        if coin_list[3] > 1:
+            print(coin_list[3], "pennies!" )   #for pennies!
+        elif coin_list[3] == 1:
+            print('1 penny!')
+    else:
+        if coin_list[3] > 1:
+            print('and', coin_list[3], "pennies!" )   #for pennies!
+        elif coin_list[3] == 1:
+            print('and 1 penny!')
     
     
 
 change_calc(total_price, cash_given)
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
