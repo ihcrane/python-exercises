@@ -1,7 +1,18 @@
+
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[28]:
+# In[29]:
+
+
+money_dict = [{'name': 'twenty', 'plural': 'twenties', 'value': 0},       #dictionary to set singular and plural
+              {'name': 'ten', 'plural': 'tens', 'value': 0},             #names for money types as well as amounts
+              {'name': 'five', 'plural': 'fives', 'value': 0},
+              {'name': 'one', 'plural': 'ones', 'value': 0},
+              {'name': 'quarter', 'plural': 'quarters', 'value': 0},
+              {'name': 'dime', 'plural': 'dimes', 'value': 0},
+              {'name': 'nickel', 'plural': 'nickels', 'value': 0},
+              {'name': 'penny', 'plural': 'pennies', 'value': 0}]
 
 
 def dollar_calc(dollars):        #function for dollar calculation
@@ -9,6 +20,7 @@ def dollar_calc(dollars):        #function for dollar calculation
     tens = 0
     fives = 0
     ones = 0
+    n = 0
     dollars = int(dollars)
     while dollars > 0:                #while loop to check number of bills total
         if dollars >= 20:           #first if statement to check number of twenties 
@@ -23,13 +35,18 @@ def dollar_calc(dollars):        #function for dollar calculation
         elif dollars >= 1:         #fourth if statement to check number of ones
             dollars -= 1
             ones += 1
-    return[twenties, tens, fives, ones]      #return number of each bill in a list
+    dollar_list = [twenties, tens, fives, ones]       
+    for bills in money_dict:                    #for loop to reassign bills values inside the dictionary
+        if n <= 3:
+            bills['value'] = dollar_list[n]
+        n += 1
 
 def coin_calc(coins):          #function for coin calculation
     quarters = 0
     dimes = 0
     nickels = 0
     pennies = 0
+    n = 0
     coins = int(coins)
     while coins > 0:         #while loop to determine number of each coin
         if coins >= 25:      #if statement to determine number of quarters
@@ -44,7 +61,11 @@ def coin_calc(coins):          #function for coin calculation
         elif coins >= 1:      #if statement to determine number of pennies
             coins -= 1
             pennies += 1
-    return[quarters, dimes, nickels, pennies]      #return list of each number of coins
+    coin_list = [quarters, dimes, nickels, pennies]      
+    for coins in money_dict:                      #for loop to reassign coin values inside dictionary
+        if n > 3:
+            coins['value'] = coin_list[n-4]
+        n += 1
 
 
 total_price = float(input('Please input the total price: $'))         #taking input from user for total price
@@ -55,54 +76,21 @@ def change_calc(price, cash):
     split_list = total_change.split('.')
     dollars = split_list[0]                #setting dollars to equal only the whole numbers of the change
     coins = split_list[-1]                 #setting coins to equal the decimal numbers of the change
+    
+    dollar_calc(dollars)               #running total change through above functions
+    coin_calc(coins)
+    
+    print(f'Your total change is $', total_change)           #print total change
+            
+    for money in money_dict:                         #for loop to determine if value is greater than 1
+        if money['value'] > 1:
+            print(money['value'], ' ', money['plural'])         #only prints from this line if it needs to be plural     
+        
+        elif money['value'] == 1:
+            print(money['value'], ' ', money['name'])          #only prints from this line if not plural
 
-    
-    dollar_list = dollar_calc(dollars)    #calling the dollar_calc function
-    coin_list = coin_calc(coins)          #calling coin_calc function
-    total_change = float(total_change)
-    
-    print(f'Your total change is ${total_change}')           #print total change
-    
-    if dollar_list[0] > 1:                           #if statement to determine if more then one of each bill
-        print(dollar_list[0], "twenty dollar bills" )   #for printing line with or without plurals
-    elif dollar_list[0] == 1:
-        print(dollar_list[0], "twenty dollar bill")
-    if dollar_list[1] > 1:
-        print(dollar_list[1], "ten dollar bills" )     #for 10 dollar bills
-    elif dollar_list[1] == 1:
-        print(dollar_list[1], "ten dollar bill")
-    if dollar_list[2] > 1:
-        print(dollar_list[2], "five dollar bills" )    #for 5 dollar bills
-    elif dollar_list[2] == 1:
-        print(dollar_list[2], "five dollar bill")
-    if dollar_list[3] > 1:
-        print(dollar_list[3], "one dollar bills" )     #for 1 dollar bills
-    elif dollar_list[3] == 1:
-        print(dollar_list[3], "one dollar bill")
-    
-     
-    if coin_list[0] > 1:                   #if statement to determine if more then one of each coin
-        print(coin_list[0], "quarters" )     #for printing line with or without plurals
-    elif coin_list[0] == 1:
-        print(coin_list[0], "quarter")
-    if coin_list[1] > 1:
-        print(coin_list[1], "dimes" )        #for dimes
-    elif coin_list[1] == 1:
-        print(coin_list[1], "dime")
-    if coin_list[2] > 1:
-        print(coin_list[2], "nickels" )     #for nickels
-    elif coin_list[2] == 1:
-        print(coin_list[2], "nickel")
-    if total_change < 0.05:
-        if coin_list[3] > 1:
-            print(coin_list[3], "pennies!" )   #for pennies!
-        elif coin_list[3] == 1:
-            print('1 penny!')
-    else:
-        if coin_list[3] > 1:
-            print('and', coin_list[3], "pennies!" )   #for pennies!
-        elif coin_list[3] == 1:
-            print('and 1 penny!')
+        else:
+            continue                                #doesn't print if value is equal to 0
     
     
 
