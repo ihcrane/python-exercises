@@ -49,7 +49,7 @@ from itertools import permutations
 list(permutations('abcd', 2))
 
 
-# In[42]:
+# In[2]:
 
 
 import json
@@ -79,45 +79,34 @@ for n in dict_1:
 print(num)
 
 
-# In[33]:
+# In[10]:
 
 
 total = 0
 for n in dict_1:
-    num_str = n['balance']
-    num_str = handle_commas(num_str)
-    num_str = num_str.replace('$', '')
-    num_str = num_str.replace(',', '')
-    total += float(num_str)
+    total += float(n['balance'].replace('$', '').replace(',', ''))
     
 print(total)
 
 
-# In[68]:
+# In[9]:
 
 
 total = 0
 for n in dict_1:
-    num_str = n['balance']
-    num_str = handle_commas(num_str)
-    num_str = num_str.replace('$', '')
-    num_str = num_str.replace(',', '')
-    total += float(num_str)
+    total += float(n['balance'].replace('$', '').replace(',', ''))
     
 print(round(total/len(dict_1), 2))
 
 
-# In[44]:
+# In[11]:
 
 
 lowest = 10000
 lowest_name = ''
 
 for n in dict_1:
-    num_str = n['balance']
-    num_str = handle_commas(num_str)
-    num_str = num_str.replace('$', '')
-    num = float(num_str.replace(',', ''))
+    num = float(n['balance'].replace('$', '').replace(',', ''))
     
     if num < lowest:
         lowest_name = n['name']
@@ -126,17 +115,14 @@ for n in dict_1:
 print(lowest_name, lowest)
 
 
-# In[45]:
+# In[12]:
 
 
 highest = 1000
 highest_name = ''
 
 for n in dict_1:
-    num_str = n['balance']
-    num_str = handle_commas(num_str)
-    num_str = num_str.replace('$', '')
-    num = float(num_str.replace(',', ''))
+    num = float(n['balance'].replace('$', '').replace(',', ''))
     
     if num > highest:
         highest_name = n['name']
@@ -158,7 +144,7 @@ ba_count = fruits.count('banana')
 print('strawberry:', sb_count, 'apple:', ap_count, 'banana:', ba_count)
 
 
-# In[67]:
+# In[13]:
 
 
 greetings = [n['greeting'] for n in dict_1]
@@ -166,9 +152,7 @@ total = 0
 
 for n in greetings:
     spot = n.find('unread')
-    num = n[spot-3:spot]
-    num = int(num)
-    total += num
+    total += int(n[spot-3:spot])
 
 print(total)
 
