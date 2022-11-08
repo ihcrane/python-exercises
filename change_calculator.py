@@ -1,18 +1,17 @@
-
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[29]:
+# In[35]:
 
 
-money_dict = [{'name': 'twenty', 'plural': 'twenties', 'value': 0},       #dictionary to set singular and plural
-              {'name': 'ten', 'plural': 'tens', 'value': 0},             #names for money types as well as amounts
-              {'name': 'five', 'plural': 'fives', 'value': 0},
-              {'name': 'one', 'plural': 'ones', 'value': 0},
-              {'name': 'quarter', 'plural': 'quarters', 'value': 0},
-              {'name': 'dime', 'plural': 'dimes', 'value': 0},
-              {'name': 'nickel', 'plural': 'nickels', 'value': 0},
-              {'name': 'penny', 'plural': 'pennies', 'value': 0}]
+money_dict = [{'name': 'twenty', 'plural': 'twenties', 'value': 0, 'amount': 10},       #dictionary to set singular and plural
+                  {'name': 'ten', 'plural': 'tens', 'value': 0,'amount': 10},             #names for money types as well as amounts
+                  {'name': 'five', 'plural': 'fives', 'value': 0, 'amount': 20},
+                  {'name': 'one', 'plural': 'ones', 'value': 0, 'amount': 50},
+                  {'name': 'quarter', 'plural': 'quarters', 'value': 0, 'amount': 50},
+                  {'name': 'dime', 'plural': 'dimes', 'value': 0, 'amount': 50},
+                  {'name': 'nickel', 'plural': 'nickels', 'value': 0, 'amount': 50},
+                  {'name': 'penny', 'plural': 'pennies', 'value': 0, 'amount': 50}]
 
 
 def dollar_calc(dollars):        #function for dollar calculation
@@ -38,7 +37,15 @@ def dollar_calc(dollars):        #function for dollar calculation
     dollar_list = [twenties, tens, fives, ones]       
     for bills in money_dict:                    #for loop to reassign bills values inside the dictionary
         if n <= 3:
-            bills['value'] = dollar_list[n]
+            if bills['amount'] > 0:
+                bills['amount'] -= dollar_list[n]
+                bills['value'] = dollar_list[n]
+            else:
+                print(f'No more', bills['plural'], '!')
+                bills['value'] = 0
+                if bills['name'] == 'five':
+                    dollar_list[n+1] += (dollar_list[n] * 5)
+                dollar_list[n+1] += (dollar_list[n] * 2)
         n += 1
 
 def coin_calc(coins):          #function for coin calculation
@@ -65,36 +72,60 @@ def coin_calc(coins):          #function for coin calculation
     for coins in money_dict:                      #for loop to reassign coin values inside dictionary
         if n > 3:
             coins['value'] = coin_list[n-4]
+            if coins['amount'] > 0:
+                coins['amount'] -= coin_list[n-4]
+            else:
+                print(f'No more', coins['plural'], '!')
+                coins['value'] = 0
+                if coins['name'] == 'quarter':
+                    coin_list[n-3] += (coin_list[n-4] * 2)
+                    coin_list[n-2] += coin_list[n-4]
+                elif coins['name'] == 'nickel':
+                    coin_list[n-3] += (coin_list[n-4] * 5)
+                else:
+                    coin_list[n-3] += (coin_list[n-4] * 2)
         n += 1
 
 
-total_price = float(input('Please input the total price: $'))         #taking input from user for total price
-cash_given = float(input('Please input the total cash paid: $'))      #taking input from user for cash paid
+
 
 def change_calc(price, cash):
     total_change = str(format((cash - price), '.2f'))              #determining total change
     split_list = total_change.split('.')
     dollars = split_list[0]                #setting dollars to equal only the whole numbers of the change
     coins = split_list[-1]                 #setting coins to equal the decimal numbers of the change
-    
+
     dollar_calc(dollars)               #running total change through above functions
     coin_calc(coins)
-    
+
     print(f'Your total change is $', total_change)           #print total change
-            
+
     for money in money_dict:                         #for loop to determine if value is greater than 1
         if money['value'] > 1:
-            print(money['value'], ' ', money['plural'])         #only prints from this line if it needs to be plural     
-        
+            print(money['value'], ' ', money['plural'])         #only prints from this line if it needs to be plural
+            print('Amount left: ', money['amount'], ' ', money['plural'])
+
         elif money['value'] == 1:
             print(money['value'], ' ', money['name'])          #only prints from this line if not plural
+            print('Amount left: ', money['amount'], ' ', money['plural'])
 
         else:
             continue                                #doesn't print if value is equal to 0
-    
-    
 
-change_calc(total_price, cash_given)
+
+
+
+while True:
+    total_price = float(input('Please input the total price: $'))         #taking input from user for total price
+    cash_given = float(input('Please input the total cash paid: $'))      #taking input from user for cash paid
+    
+    change_calc(total_price, cash_given)
+    
+    choice = input('Do you want to add more purchases? (y/n) ')
+    if choice == 'y' or choice == 'yes':
+        continue
+    else:
+        break
 
 
 # In[ ]:
