@@ -25,12 +25,12 @@ from functions_exercises import get_letter_grade as lg
 lg(97)
 
 
-# In[6]:
+# In[5]:
 
 
 from itertools import product
 
-list(product('ABCD', '123'))
+list(product('ABC', [1,2,3]))
 
 
 # In[8]:
@@ -49,7 +49,7 @@ from itertools import permutations
 list(permutations('abcd', 2))
 
 
-# In[2]:
+# In[3]:
 
 
 import json
@@ -59,24 +59,24 @@ dict_1 = json.load(open('profiles.json'))
 print(len(dict_1))
 
 
-# In[24]:
+# In[12]:
 
 
-num = 0
+count = 0
 for n in dict_1:
     if n['isActive']:
-        num += 1
-print(num)
+        count += 1
+print(count)
 
 
-# In[71]:
+# In[11]:
 
 
-num = 0
+count = 0
 for n in dict_1:
     if n['isActive'] == False:
-        num += 1
-print(num)
+        count += 1
+print(count)
 
 
 # In[10]:
@@ -92,41 +92,41 @@ print(total)
 # In[9]:
 
 
-total = 0
+avg_bal = 0
 for n in dict_1:
-    total += float(n['balance'].replace('$', '').replace(',', ''))
+    avg_bal += float(n['balance'].replace('$', '').replace(',', ''))
     
-print(round(total/len(dict_1), 2))
+print(round(avg_bal/len(dict_1), 2))
 
 
-# In[11]:
+# In[13]:
 
 
-lowest = 10000
+lowest = 5000
 lowest_name = ''
 
 for n in dict_1:
-    num = float(n['balance'].replace('$', '').replace(',', ''))
+    bal = float(n['balance'].replace('$', '').replace(',', ''))
     
-    if num < lowest:
+    if bal < lowest:
         lowest_name = n['name']
-        lowest = num
+        lowest = bal
 
 print(lowest_name, lowest)
 
 
-# In[12]:
+# In[14]:
 
 
 highest = 1000
 highest_name = ''
 
 for n in dict_1:
-    num = float(n['balance'].replace('$', '').replace(',', ''))
+    bal = float(n['balance'].replace('$', '').replace(',', ''))
     
-    if num > highest:
+    if bal > highest:
         highest_name = n['name']
-        highest = num
+        highest = bal
 
 print(highest_name, highest)
 
@@ -144,15 +144,15 @@ ba_count = fruits.count('banana')
 print('strawberry:', sb_count, 'apple:', ap_count, 'banana:', ba_count)
 
 
-# In[13]:
+# In[15]:
 
 
 greetings = [n['greeting'] for n in dict_1]
 total = 0
 
 for n in greetings:
-    spot = n.find('unread')
-    total += int(n[spot-3:spot])
+    place = n.find('unread')
+    total += int(n[place-3:place])
 
 print(total)
 
