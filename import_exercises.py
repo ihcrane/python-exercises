@@ -54,58 +54,52 @@ list(permutations('abcd', 2))
 
 import json
 
-dict_1 = json.load(open('profiles.json'))
+profiles = json.load(open('profiles.json'))
 
-print(len(dict_1))
-
-
-# In[12]:
+print(len(profiles))
 
 
-count = 0
-for n in dict_1:
-    if n['isActive']:
-        count += 1
-print(count)
+# In[5]:
 
 
-# In[11]:
+active = [n for n in profiles if n['isActive']]
+len(active)
 
 
-count = 0
-for n in dict_1:
-    if n['isActive'] == False:
-        count += 1
-print(count)
+# In[7]:
 
 
-# In[10]:
+not_active = [n for n in profiles if not n['isActive']]
+len(not_active)
+
+
+# In[8]:
 
 
 total = 0
-for n in dict_1:
+for n in profiles:
     total += float(n['balance'].replace('$', '').replace(',', ''))
     
 print(total)
 
 
-# In[9]:
+# In[11]:
 
 
 avg_bal = 0
-for n in dict_1:
+for n in profiles:
     avg_bal += float(n['balance'].replace('$', '').replace(',', ''))
     
-print(round(avg_bal/len(dict_1), 2))
+print(round(avg_bal/len(profiles), 2))
 
 
-# In[13]:
+# In[12]:
 
 
 lowest = 5000
 lowest_name = ''
 
-for n in dict_1:
+for n in profiles:
     bal = float(n['balance'].replace('$', '').replace(',', ''))
     
     if bal < lowest:
@@ -115,13 +109,13 @@ for n in dict_1:
 print(lowest_name, lowest)
 
 
-# In[14]:
+# In[13]:
 
 
 highest = 1000
 highest_name = ''
 
-for n in dict_1:
+for n in profiles:
     bal = float(n['balance'].replace('$', '').replace(',', ''))
     
     if bal > highest:
@@ -131,10 +125,10 @@ for n in dict_1:
 print(highest_name, highest)
 
 
-# In[58]:
+# In[14]:
 
 
-fruits = [n['favoriteFruit'] for n in dict_1]
+fruits = [n['favoriteFruit'] for n in profiles]
 
 sb_count = fruits.count('strawberry')
 ap_count = fruits.count('apple')
@@ -147,7 +141,7 @@ print('strawberry:', sb_count, 'apple:', ap_count, 'banana:', ba_count)
 # In[15]:
 
 
-greetings = [n['greeting'] for n in dict_1]
+greetings = [n['greeting'] for n in profiles]
 total = 0
 
 for n in greetings:
