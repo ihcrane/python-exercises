@@ -49,7 +49,7 @@ from itertools import permutations
 list(permutations('abcd', 2))
 
 
-# In[3]:
+# In[2]:
 
 
 import json
@@ -138,15 +138,16 @@ ba_count = fruits.count('banana')
 print('strawberry:', sb_count, 'apple:', ap_count, 'banana:', ba_count)
 
 
-# In[15]:
+# In[17]:
 
 
-greetings = [n['greeting'] for n in profiles]
 total = 0
 
-for n in greetings:
-    place = n.find('unread')
-    total += int(n[place-3:place])
+for n in profiles:
+    msg = n['greeting'].split(' ')
+    for i in msg:
+        if i.isdigit():
+            total += (int(i))
 
 print(total)
 
